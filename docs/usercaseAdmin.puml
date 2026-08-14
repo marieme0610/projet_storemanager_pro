@@ -1,0 +1,113 @@
+@startuml usecase
+
+left to right direction
+actor "admin boutique" as admin
+
+rectangle "package"{
+    usecase "Lister vente" as dash
+    usecase "Acceder ventes/POS" as vente
+    usecase "gestion dette" as dette
+    usecase "gerer approvissionnement" as appro
+    usecase "consulter produits et tiers" as tier
+    usecase "authentification" as auth
+
+    'usercase interne dashboard'
+    usecase "consulter statistique" as stat
+    usecase "consulter vente recent" as recent 
+    usecase "consulter rupture stock" as rupture
+    usecase "consulter livraison" as livraison
+    usecase "consulter detteJour" as detteBord
+    usecase "consulter client debiteur" as debiteur
+    usecase "consulter sole fournisseur" as solde
+
+    'usercase interne vente'
+
+    usecase "consulter statistique vente" as statVente
+    usecase "lister ventes" as listvente
+    usecase "enregistrer vente" as save 
+    usecase "selectionner client" as client
+    usecase "selectionner article" as article
+    usecase "selectionner operateur" as op
+    usecase "consulter sole fournisseur" as solde
+
+    'usercase interne dette'
+
+    usecase "consulter statistique dette" as statDette
+    usecase "liste dette actif" as listDetteActif
+    usecase "consulter article" as consulteArticle 
+    usecase "selectionner paiement" as consultePaiement
+    usecase "faire un rembourssement" as remboursssement
+    usecase "rechercher client" as searchClient
+
+    'usercase interne appro'
+    
+    usecase "consulter statistique approvisionnement" as statAppro
+    usecase "consulter bordoreau" as borderaux
+    usecase "afficher ligne" as consulteligne
+    usecase "receptionner livraison" as recetionne
+
+    'usercase interne tiers'
+
+    usecase "consulter statistique tiers produit" as statProd
+    usecase "enregistrer produit" as saveProd
+    usecase "consulter catalogue" as catalogue
+    usecase "rechercher produit" as searchProd
+
+
+
+}
+
+    dash ..>auth : <<include>>
+    vente ..>auth : <<include>>
+    dette ..>auth : <<include>>
+    appro ..>auth : <<include>>
+    tier ..>auth : <<include>>
+
+    admin-->dash
+    admin-->vente
+    admin-->dette
+    admin-->appro
+    admin-->tier
+
+    dash ..>stat : <<include>>
+    dash ..> recent: <<include>>
+    livraison <.. rupture: <<extend>>
+    dash ..> livraison: <<include>>
+    livraison <.. detteBord: <<extend>>
+    recent <.. debiteur: <<extend>>
+    recent <.. solde: <<extend>>
+
+'  vente ..>stat : <<include>>
+'  vente ..> recent: <<include>>
+'  vente ..> rupture: <<include>>
+'  vente ..> livraison: <<include>>
+'  vente ..> solde: <<include>>
+
+   vente ..>statVente : <<include>>
+   vente ..>listvente : <<include>>
+   vente ..>save : <<include>>
+   save ..>client : <<include>>
+   save ..>article : <<include>>
+   save ..>op : <<include>>
+
+   dette ..> statDette: <<include>>
+   dette ..> listDetteActif: <<include>>
+   listDetteActif <.. consulteArticle: <<extend>>
+   listDetteActif <.. consultePaiement: <<extend>>
+   listDetteActif <.. remboursssement: <<extend>>
+   listDetteActif <.. searchClient: <<extend>>
+
+
+
+    appro ..> statAppro: <<include>>
+    appro ..> borderaux: <<include>>
+    borderaux <.. consulteligne: <<extend>>
+    borderaux <.. recetionne: <<extend>>
+
+
+    tier ..> statProd: <<include>>
+    tier ..> saveProd: <<include>>
+    tier ..> catalogue: <<include>>
+    catalogue <.. searchProd: <<extend>>
+
+@enduml

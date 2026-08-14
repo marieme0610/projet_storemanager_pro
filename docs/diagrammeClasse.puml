@@ -1,0 +1,117 @@
+@startuml Diagramme_Classe_Cotisation
+
+class Utilisateur {
+     id 
+     nomComplet 
+     email 
+     mot_passe 
+     adresse 
+     tel 
+}
+
+class Role {
+     id 
+     nom 
+}
+
+class Client{
+     id 
+     nom 
+     prenom 
+     email 
+     tel 
+     limiteCredit
+}
+
+class Commande{
+     id 
+     datCommande 
+     montantInitial 
+     avance
+}
+
+
+class StatutAppro{
+     id 
+     nom 
+}
+
+
+class LigneCommande{
+     id 
+     qteCommande 
+     prixReel
+}
+
+class ModePaiement{
+     id 
+     mode 
+}
+
+class Reglement{
+     id 
+     date : Date
+     montant
+}
+
+class Produit{
+     id 
+     libelle 
+     prixVente
+     stockInitial 
+}
+
+class Fournisseur{
+    id 
+    nom 
+    email 
+    tel 
+    adresse 
+}
+
+class StatutAppro{
+     id 
+     nom 
+}
+
+class Appro{
+     id 
+     refBl 
+     dateAppro 
+}
+
+class LigneAppro{
+     id 
+     qteAppro 
+     qteRecu 
+     prixReel
+}
+
+
+
+Utilisateur "0..*" --> "1" Role 
+Client "1" --> "0..*" Commande 
+Commande "1" --> "0..*" LigneCommande 
+Produit "1" --> "0..*" LigneCommande 
+
+Appro "0..*" --> "1" Fournisseur 
+Appro "1" --> "0..*" LigneAppro 
+Produit "1" --> "0..*" LigneAppro 
+
+StatutAppro "1" --> "0..*" Appro 
+Commande "0..*" --> "1" ModePaiement 
+Reglement "0..*" --> "1" Commande 
+
+Appro "0..*" --> "1" Utilisateur 
+Commande "0..*" --> "1" Utilisateur 
+
+
+
+
+
+
+
+
+
+
+@enduml

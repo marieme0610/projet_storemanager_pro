@@ -1,0 +1,42 @@
+@startuml Inventaire
+
+left to right direction 
+
+actor "inventaire" as i
+
+
+rectangle "Inventaire" {
+
+    usecase "Voir statistique " as stat
+    usecase "Enregistrer produit" as saveProduit
+    usecase "Voir catalogue " as catalogue
+
+    usecase "Enregistrer client" as saveClient
+    usecase "Voir répertoire client" as voirRep
+
+    usecase "Enregistrer fournisseur" as saveFour
+    usecase "Voir répertoire fournisseur" as voirRepFour
+
+    usecase "Authentification" as auth
+}
+
+i --> saveProduit
+i --> saveFour
+i --> saveClient
+i --> stat
+i --> catalogue
+
+saveClient ..> voirRep : <<include>>
+saveFour ..> voirRepFour : <<include>>
+
+stat ..> auth : <<include>>
+saveProduit ..> auth : <<include>>
+catalogue ..> auth : <<include>>
+saveFour ..> auth : <<include>>
+saveClient ..> auth : <<include>>
+
+
+
+
+
+@enduml
