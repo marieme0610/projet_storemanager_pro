@@ -1,0 +1,29 @@
+@startuml appro
+
+left to right direction
+
+actor "Charge Stock" as chargerStock
+
+rectangle "Approvisionnement" {
+    usecase "Approvisionnement" as appro
+    usecase "Total entrées" as entre
+    usecase "Bon réception" as recep
+    usecase "Fournisseurs actifs" as actif
+    usecase "Lister bordereaux" as bord
+    usecase "Lignes" as ligne
+    usecase "Réceptionner" as recepion
+    usecase "Authentification" as auth
+}
+
+chargerStock --> appro
+
+appro ..> entre : <<include>>
+appro ..> recep : <<include>>
+appro ..> actif : <<include>>
+appro ..> bord : <<include>>
+appro ..> auth : <<include>>
+
+ligne ..> bord : <<extend>>
+recepion ..> bord : <<extend>>
+
+@enduml

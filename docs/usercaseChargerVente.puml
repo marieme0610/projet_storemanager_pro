@@ -1,0 +1,48 @@
+@startuml "ChargerVente"
+
+left to right direction
+
+
+actor "ChargerVente" as chargerVente
+
+rectangle "Vente/POS" {
+
+    usecase "Lister statistiques" as stat
+    usecase "consulter encaissements" as encaisse
+    usecase "consulter en cours clients total" as encours
+    usecase "consulter commandes enregistrées" as saveCommande
+
+    usecase "Enregistrer vente" as saveVente
+    usecase "Sélectionner client" as selectClient
+    usecase "Ajouter article" as ajoutArticle
+    usecase "Sélectionner article" as selectArticle
+    usecase "Saisir qte" as qte
+
+    usecase "Sélectionner mode règlement" as reglement
+    usecase "Saisir montant versement" as versement
+
+    usecase "Lister commandes" as listC
+    usecase "Voir lignes" as lignes
+}
+
+chargerVente --> stat
+chargerVente --> saveVente
+chargerVente --> listC
+
+saveVente ..> selectClient : <<include>>
+saveVente ..> ajoutArticle : <<include>>
+saveVente ..> reglement : <<include>>
+saveVente ..> versement : <<include>>
+
+ajoutArticle ..> selectArticle : <<include>>
+ajoutArticle ..> qte : <<include>>
+
+encaisse ..> stat : <<extend>>
+encours ..> stat : <<extend>>
+saveCommande ..> stat : <<extend>>
+
+lignes ..> listC : <<extend>>
+
+
+
+@enduml
