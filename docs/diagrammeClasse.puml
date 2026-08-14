@@ -1,119 +1,112 @@
 @startuml Diagramme_Classe_StoreManagerPro
 
-    class Role {
-        - id
-        - nom
-    }
+class Role {
+    - id
+    - nom
+}
 
-    class Utilisateur {
-        - id
-        - nomComplet
-        - email
-        - mot_passe
-    }
+class Utilisateur {
+    - id
+    - nomComplet
+    - email
+    - mot_passe
+}
 
+class Produit {
+    - id
+    - libelle
+    - prixVente
+    - stock
+    - seuil
+}
 
+class Client {
+    - id
+    - nom
+    - prenom
+    - email
+    - tel
+    - limiteCredit
+}
 
-    class Produit {
-        - id
-        - libelle
-        - prixVente
-        - stock
-        - seuil
-    }
+class Fournisseur {
+    - id
+    - nomComplet
+    - email
+    - tel
+}
 
-    class Client {
-        - id
-        - nom
-        - prenom
-        - email
-        - tel
-        - limiteCredit
-    }
+class Commande {
+    - id
+    - datCommande
+    - montantInitial
+    - avance
+    - estCredit
+}
 
-    class Fournisseur {
-        - id
-        - nomComplet
-        - email
-        - tel
-    }
+class LigneCommande {
+    - id
+    - quantite
+    - prixUnitaire
+}
 
+class ModePaiement {
+    - id
+    - libelle
+}
 
+class Reglement {
+    - id
+    - dateReglement
+    - montant
+}
 
-    class Commande {
-        - id
-        - datCommande
-        - montantInitial
-        - avance
-        - estCredit
-    }
+class Dette {
+    - id
+    - montantInitial
+    - montantRestant
+    - statut
+    - dateEcheance
+}
 
-    class LigneCommande {
-        - id
-        - quantite
-        - prixUnitaire
-    }
+class StatutAppro {
+    - id
+    - nom
+}
 
-    class ModePaiement {
-        - id
-        - libelle
-    }
+class Appro {
+    - id
+    - refBl
+    - dateAppro
+    - montantTotal
+}
 
-    class Reglement {
-        - id
-        - dateReglement
-        - montant
-    }
-
-    class Dette {
-        - id
-        - montantInitial
-        - montantRestant
-        - statut
-        - dateEcheance
-    }
-
-
-
-    class StatutAppro {
-        - id
-        - nom
-    }
-
-    class Appro {
-        - id
-        - refBl
-        - dateAppro
-        - montantTotal
-    }
-
-    class LigneAppro {
-        - id
-        - qteAppro
-        - qteRecu
-        - prixReel
-    }
+class LigneAppro {
+    - id
+    - qteAppro
+    - qteRecu
+    - prixReel
+}
 
 
+Utilisateur "0..*" --> "1" Role
 
+Client "1" --> "0..*" Commande
+Commande "1" --> "1..*" LigneCommande
+Produit "1" --> "0..*" LigneCommande
 
-Utilisateur "0..*" --> "1" Role : posseder
+Commande "0..*" --> "1" ModePaiement
+Commande "0..*" --> "1" Utilisateur
 
-Client "1" --> "0..*" Commande : passer
-Commande "1" --> "1..*" LigneCommande : composer
-Produit "1" --> "0..*" LigneCommande : figurer dans
-Commande "0..*" --> "1" ModePaiement : regler via
-Commande "0..*" --> "1" Utilisateur : enregistree par
+Commande "1" --> "0..1" Dette
+Dette "1" --> "0..*" Reglement
+Reglement "0..*" --> "1" ModePaiement
+Reglement "0..*" --> "1" Utilisateur
 
-Commande "1" --> "0..1" Dette : engendrer
-Dette "1" --> "0..*" Reglement : faire l'objet de
-Reglement "0..*" --> "1" ModePaiement : effectue par
-Reglement "0..*" --> "1" Utilisateur : encaisse par
-
-Appro "0..*" --> "1" Fournisseur : provenir de
-Appro "1" --> "1..*" LigneAppro : contenir
-Produit "1" --> "0..*" LigneAppro : concerne par
-StatutAppro "1" --> "0..*" Appro : qualifier
-Appro "0..*" --> "1" Utilisateur : receptionne par
+Appro "0..*" --> "1" Fournisseur
+Appro "1" --> "1..*" LigneAppro
+Produit "1" --> "0..*" LigneAppro
+StatutAppro "1" --> "0..*" Appro
+Appro "0..*" --> "1" Utilisateur
 
 @enduml

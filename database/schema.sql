@@ -21,8 +21,8 @@ CREATE TABLE produits (
     id SERIAL PRIMARY KEY,
     libelle VARCHAR(150) NOT NULL,
     prix_vente NUMERIC(10, 2) NOT NULL CHECK (prix_vente >= 0),
-    stock_actuel INT NOT NULL DEFAULT 0 CHECK (stock_actuel >= 0),
-    seuil_alerte INT NOT NULL DEFAULT 5 CHECK (seuil_alerte >= 0)
+    stock INT NOT NULL DEFAULT 0 CHECK (stock_actuel >= 0),
+    seuil INT NOT NULL DEFAULT 5 CHECK (seuil_alerte >= 0)
 );
 
 CREATE TABLE clients (
@@ -76,7 +76,7 @@ CREATE TABLE dettes (
     id SERIAL PRIMARY KEY,
     montant_initial NUMERIC(10, 2) NOT NULL CHECK (montant_initial > 0),
     montant_restant NUMERIC(10, 2) NOT NULL CHECK (montant_restant >= 0),
-    statut VARCHAR(30) NOT NULL DEFAULT 'EN_COURS', -- ex: EN_COURS, SOLDEE
+    statut VARCHAR(30) NOT NULL DEFAULT 'EN_COURS',
     date_echeance TIMESTAMP,
     commande_id INT NOT NULL UNIQUE,
     CONSTRAINT fk_dette_commande FOREIGN KEY (commande_id) REFERENCES commandes(id) ON DELETE CASCADE
